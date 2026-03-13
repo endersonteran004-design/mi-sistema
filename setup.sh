@@ -25,14 +25,19 @@ touch "$DB_FILE"
 TOKEN="8736253373:AAFk6UbdjyXmXh8HTbpuSvGWC4D07OhZm-w"
 ID_DESTINO="-1003885014030"
 
+# --- CONFIGURACIÓN DE PROMPT Y MENSAJE ---
+PS1='\[\e[1;32m\]\w\[\e[0m\] \[\e[1;33m\]$ \[\e[0m\]'
+
+function acabado {
+    echo -e "\e[1;35m( listo perra ☑️ )\e[0m"
+}
+PROMPT_COMMAND=acabado
+
+# --- ALIAS ---
 alias re='f(){ url=$(echo "$1" | cut -d"?" -f1); yt-dlp --external-downloader aria2c --external-downloader-args "-x 16 -s 16 -k 1M" -o "$BASE_DIR/re_descargas_bitches/%(title)s.%(ext)s" "$url" || gallery-dl --directory "$BASE_DIR/re_descargas_bitches" "$url"; [ $? -eq 0 ] && termux-media-scan "$BASE_DIR/re_descargas_bitches"/*; }; f'
-
 alias bajar='f(){ url=$(echo "$1" | cut -d"?" -f1); yt-dlp -f "bestvideo[height<=1080]+251/bestaudio/best" --external-downloader aria2c -o "$BASE_DIR/youtube_bitch/%(title)s.%(ext)s" "$url" && termux-media-scan "$BASE_DIR/youtube_bitch"/*; }; f'
-
 alias fotos='f(){ url=$(echo "$1" | cut -d"?" -f1); gallery-dl -o "base-directory=$BASE_DIR/fotos_universal" "$url" && termux-media-scan "$BASE_DIR/fotos_universal"/*; }; f'
-
 alias audio='f(){ url=$(echo "$1" | cut -d"?" -f1); yt-dlp -x --audio-format opus --audio-quality 0 --external-downloader aria2c -o "$BASE_DIR/musica_estudio_opus/%(title)s.%(ext)s" "$url"; [ $? -eq 0 ] && termux-media-scan "$BASE_DIR/musica_estudio_opus"/*; }; f'
-
 alias orden='termux-media-scan "$BASE_DIR"/*; echo " ✅ Galería sincronizada."'
 alias reload='source ~/.bashrc && echo "Configuración V45 recargada"'
 
@@ -53,4 +58,4 @@ clon() {
 EOF
 
 source ~/.bashrc
-echo "✔️ Restauración completa. V45 inyectada."
+echo "✔️ Restauración completa. V45 inyectada con aviso de finalización."
